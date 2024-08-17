@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=3 uid="uid://dgkoxonp2tp74"]
+
+[ext_resource type="Texture2D" uid="uid://bq4n0wiuddauo" path="res://assets/export/player.png" id="1_g3xdn"]
+[ext_resource type="Script" path="res://scripts/player_script.gd" id="1_hoi7u"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1eai2"]
+radius = 28.6356
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mb00r"]
+radius = 296.422
+
+[sub_resource type="SphereMesh" id="SphereMesh_iw3jm"]
+radius = 5.45
+height = 8.921
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+position = Vector2(592, 224)
+script = ExtResource("1_hoi7u")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CircleShape2D_1eai2")
+
+[node name="detection_range" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="detection_range"]
+shape = SubResource("CircleShape2D_mb00r")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 1.5708
+texture = ExtResource("1_g3xdn")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Stats" type="Node" parent="."]
+
+[node name="Node" type="Node" parent="."]
+
+[node name="Marker" type="Marker2D" parent="Node"]
+position = Vector2(592, 224)
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="Node/Marker"]
+mesh = SubResource("SphereMesh_iw3jm")
