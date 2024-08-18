@@ -1,13 +1,89 @@
-[gd_scene load_steps=4 format=3 uid="uid://bfcwxt763gfnt"]
+[gd_scene load_steps=7 format=3 uid="uid://bfcwxt763gfnt"]
 
-[ext_resource type="Script" path="res://scenes/test/world.gd" id="1_jppao"]
+[ext_resource type="Script" path="res://scenes/test/world2.gd" id="1_q8fxp"]
 [ext_resource type="PackedScene" uid="uid://cx2sqgbttrow7" path="res://scenes/test/marker_2d.tscn" id="2_aig2s"]
 [ext_resource type="PackedScene" uid="uid://dgkoxonp2tp74" path="res://scenes/test/player.tscn" id="2_yx58l"]
+[ext_resource type="Texture2D" uid="uid://bbvc8huyuvdyx" path="res://assets/export/square.png" id="4_spyt3"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_45yfw"]
+texture = ExtResource("4_spyt3")
+texture_region_size = Vector2i(127, 127)
+0:0/next_alternative_id = 9
+0:0/0 = 0
+0:0/8 = 8
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+7:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+5:4/0 = 0
+6:4/0 = 0
+7:4/0 = 0
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+4:5/0 = 0
+5:5/0 = 0
+6:5/0 = 0
+7:5/0 = 0
+0:6/0 = 0
+1:6/0 = 0
+2:6/0 = 0
+3:6/0 = 0
+4:6/0 = 0
+5:6/0 = 0
+6:6/0 = 0
+7:6/0 = 0
+0:7/0 = 0
+1:7/0 = 0
+2:7/0 = 0
+3:7/0 = 0
+4:7/0 = 0
+5:7/0 = 0
+6:7/0 = 0
+7:7/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_04joq"]
+tile_size = Vector2i(128, 128)
+sources/0 = SubResource("TileSetAtlasSource_45yfw")
 
 [node name="world" type="Node2D"]
-script = ExtResource("1_jppao")
+script = ExtResource("1_q8fxp")
 
 [node name="Biome" type="Node2D" parent="."]
+visible = false
 
 [node name="Marker2D" parent="Biome" instance=ExtResource("2_aig2s")]
 
@@ -29,9 +105,18 @@ position = Vector2(0, 16000)
 [node name="player" type="Node" parent="."]
 
 [node name="CharacterBody2D" parent="player" instance=ExtResource("2_yx58l")]
-position = Vector2(696, 246)
+position = Vector2(350, -11292)
+freehand = true
+move_speed = 400.0
 
 [node name="Camera2D" parent="player/CharacterBody2D" index="3"]
 zoom = Vector2(0.15, 0.15)
+
+[node name="Level" type="TileMap" parent="."]
+modulate = Color(0.223529, 1, 1, 1)
+tile_set = SubResource("TileSet_04joq")
+format = 2
+
+[node name="Room" type="Node2D" parent="."]
 
 [editable path="player/CharacterBody2D"]

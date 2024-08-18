@@ -1,9 +1,10 @@
 extends CharacterBody2D
 
+# control variables
+@export var freehand : bool = false
+var shift : bool = false
 
 # camera variables
-
-
 var zoomSpeed: float = 0.0025
 var zoomMin: float = 0.001
 var zoomMax: float = 5.0
@@ -33,14 +34,15 @@ func _input(event: InputEvent ) -> void:
 		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 			if $Camera2D.zoom != Vector2.ZERO:
 				$Camera2D.zoom -= Vector2(zoomSpeed, zoomSpeed)
-			move_speed += 20
+				move_speed += 20
 		$Camera2D.zoom = clamp($Camera2D.zoom, Vector2(zoomMin, zoomMin), Vector2(zoomMax, zoomMax))
-
-	# Check if the left mouse button was clicked
-	if event is InputEventMouseMotion:
-		# Get the position of the mouse click
-		target_position = marker.position 
-		is_moving = true
+		
+	if Input.is_action_pressed("shift") and shift == false:
+		move_speed = 600
+		shift == true
+	elif Input.is_action_just_released("shift") and shift == true:
+		move_speed = lerp(move_speed , 250 , 0.6)
+		
 		
 	if Input.is_action_just_pressed("attack"):
 		target_position = marker.position 
@@ -50,15 +52,30 @@ func _physics_process(delta: float) -> void:
 	# Tank's launcher looks in mouse pointer direction
 	aim_bot(delta)
 		
-	var input_dir = Input.get_vector("down" , "up" , "left" , "right" )
-	var move_rot = Vector2()
-	if input_dir:
-		move_rot = input_dir.rotated(rotation) 
-		velocity = move_rot * move_speed
-	else:
-		velocity = velocity.move_toward(Vector2.ZERO , move_speed * delta)
+	movement(delta)
 	move_and_slide()
 	
+			
+func movement(delta):
+	if freehand:
+		if InputEventMouseMotion:
+			# Get the position of the mouse click
+			target_position = marker.position 
+			is_moving = true
+			
+	else:
+		# Check if the left mouse button was clicked
+		if Input.is_action_just_pressed("click"):
+			# Get the position of the mouse click
+			target_position = marker.position 
+			is_moving = true
+			
+		if Input.get_axis("up" , "down"):
+			var move_rot = Vector2(Input.get_axis("down" , "up") , 0)
+			velocity = move_rot.rotated(rotation) * move_speed
+		else:
+			velocity = velocity.move_toward(Vector2.ZERO , move_speed * delta)
+		
 	if is_moving:
 		# Calculate the direction vector to the target position
 		var direction = (target_position - global_position).normalized()

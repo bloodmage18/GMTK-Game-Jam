@@ -1,0 +1,31 @@
+[gd_resource type="TileSet" load_steps=5 format=3 uid="uid://cyqipghdm0jdy"]
+
+[ext_resource type="Texture2D" uid="uid://bbjwokqb6kyfe" path="res://assets/export/assets-prototype.svg" id="1_k2mpk"]
+[ext_resource type="Texture2D" uid="uid://bbvc8huyuvdyx" path="res://assets/export/square.png" id="2_r3j1a"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_075ro"]
+resource_name = "default"
+texture = ExtResource("1_k2mpk")
+texture_region_size = Vector2i(60, 60)
+0:0/next_alternative_id = 6
+0:0/0 = 0
+0:0/1 = 1
+0:0/2 = 2
+0:0/3 = 3
+0:0/4 = 4
+0:0/5 = 5
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4y4u6"]
+resource_name = "square"
+texture = ExtResource("2_r3j1a")
+texture_region_size = Vector2i(128, 128)
+0:0/next_alternative_id = 4
+0:0/0 = 0
+0:0/1 = 1
+0:0/2 = 2
+0:0/3 = 3
+
+[resource]
+tile_size = Vector2i(128, 128)
+sources/0 = SubResource("TileSetAtlasSource_075ro")
+sources/2 = SubResource("TileSetAtlasSource_4y4u6")
