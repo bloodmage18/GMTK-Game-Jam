@@ -15,6 +15,10 @@ run/main_scene="res://scenes/test/world.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+BiomeData="*res://autoload/Biome_Data.gd"
+
 [display]
 
 window/size/viewport_width=1280

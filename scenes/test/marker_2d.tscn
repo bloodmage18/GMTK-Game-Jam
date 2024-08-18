@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://cx2sqgbttrow7"]
+
+[ext_resource type="Script" path="res://scenes/test/DepthMarker.gd" id="1_lbrk7"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_e8e5s"]
+radius = 20.0
+height = 40.0
+
+[node name="Marker2D" type="Marker2D"]
+script = ExtResource("1_lbrk7")
+
+[node name="Sprite2D" type="MeshInstance2D" parent="."]
+mesh = SubResource("SphereMesh_e8e5s")
+
+[node name="Label" type="Label" parent="."]
+offset_left = 25.0
+offset_top = -35.0
+offset_right = 98.0
+offset_bottom = -11.0
+scale = Vector2(3, 3)
+text = "0ft"
+horizontal_alignment = 1
+vertical_alignment = 1

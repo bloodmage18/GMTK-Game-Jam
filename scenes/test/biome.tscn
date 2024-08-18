@@ -1,0 +1,87 @@
+[gd_scene load_steps=3 format=3 uid="uid://iwngv21mcagh"]
+
+[ext_resource type="Script" path="res://scenes/test/biome.gd" id="1_80k70"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7pwub"]
+size = Vector2(500, 500)
+
+[node name="Biome" type="RigidBody2D"]
+collision_layer = 2
+collision_mask = 2
+gravity_scale = 0.0
+can_sleep = false
+script = ExtResource("1_80k70")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -250.0
+offset_top = -250.0
+offset_right = 250.0
+offset_bottom = 250.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_7pwub")
+
+[node name="Predetor" type="Node" parent="."]
+
+[node name="Prey" type="Node" parent="."]
+
+[node name="Food" type="Node2D" parent="."]
+
+[node name="Exit" type="Node" parent="."]
+
+[node name="BiomeInfo" type="Node2D" parent="."]
+position = Vector2(8, 10)
+
+[node name="PredatorLabel" type="Label" parent="BiomeInfo"]
+offset_right = 65.0
+offset_bottom = 23.0
+scale = Vector2(3, 3)
+text = "Predator :"
+vertical_alignment = 1
+
+[node name="PredatorSlider" type="HSlider" parent="BiomeInfo/PredatorLabel"]
+layout_mode = 0
+offset_left = 117.333
+offset_top = 3.66667
+offset_right = 269.333
+offset_bottom = 19.6667
+editable = false
+
+[node name="Prey" type="Label" parent="BiomeInfo"]
+offset_left = 3.0
+offset_top = 69.0
+offset_right = 80.0
+offset_bottom = 92.0
+scale = Vector2(3, 3)
+text = "Prey :"
+vertical_alignment = 1
+
+[node name="PreySlider" type="HSlider" parent="BiomeInfo/Prey"]
+layout_mode = 0
+offset_left = 117.333
+offset_top = 3.66667
+offset_right = 269.333
+offset_bottom = 19.6667
+editable = false
+
+[node name="Food" type="Label" parent="BiomeInfo"]
+offset_left = 5.0
+offset_top = 139.0
+offset_right = 82.0
+offset_bottom = 162.0
+scale = Vector2(3, 3)
+text = "Food :"
+vertical_alignment = 1
+
+[node name="FoodSlider" type="HSlider" parent="BiomeInfo/Food"]
+layout_mode = 0
+offset_left = 117.333
+offset_top = 3.66667
+offset_right = 269.333
+offset_bottom = 19.6667
+editable = false
+
+[node name="Food_timer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="Food_timer" to="." method="_on_food_timer_timeout"]

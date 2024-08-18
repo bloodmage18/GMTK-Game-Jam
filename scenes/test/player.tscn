@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://dgkoxonp2tp74"]
+[gd_scene load_steps=7 format=3 uid="uid://dgkoxonp2tp74"]
 
 [ext_resource type="Texture2D" uid="uid://bq4n0wiuddauo" path="res://assets/export/player.png" id="1_g3xdn"]
 [ext_resource type="Script" path="res://scripts/player_script.gd" id="1_hoi7u"]
+[ext_resource type="Script" path="res://scenes/test/Stats.gd" id="3_t5yld"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1eai2"]
-radius = 28.6356
+radius = 52.0865
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_mb00r"]
 radius = 296.422
@@ -14,7 +15,6 @@ radius = 5.45
 height = 8.921
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
-position = Vector2(592, 224)
 script = ExtResource("1_hoi7u")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -31,8 +31,10 @@ rotation = 1.5708
 texture = ExtResource("1_g3xdn")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.5, 0.5)
 
 [node name="Stats" type="Node" parent="."]
+script = ExtResource("3_t5yld")
 
 [node name="Node" type="Node" parent="."]
 

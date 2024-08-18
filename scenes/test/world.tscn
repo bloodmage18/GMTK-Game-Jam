@@ -1,17 +1,37 @@
-[gd_scene load_steps=3 format=3 uid="uid://bfcwxt763gfnt"]
+[gd_scene load_steps=4 format=3 uid="uid://bfcwxt763gfnt"]
 
-[ext_resource type="Texture2D" uid="uid://dc1o4y6h72nb6" path="res://assets/export/bg.png" id="1_ma53g"]
+[ext_resource type="Script" path="res://scenes/test/world.gd" id="1_jppao"]
+[ext_resource type="PackedScene" uid="uid://cx2sqgbttrow7" path="res://scenes/test/marker_2d.tscn" id="2_aig2s"]
 [ext_resource type="PackedScene" uid="uid://dgkoxonp2tp74" path="res://scenes/test/player.tscn" id="2_yx58l"]
 
 [node name="world" type="Node2D"]
+script = ExtResource("1_jppao")
 
-[node name="world" type="Node" parent="."]
+[node name="Biome" type="Node2D" parent="."]
 
-[node name="ColorRect" type="TextureRect" parent="world"]
-offset_right = 1280.0
-offset_bottom = 720.0
-texture = ExtResource("1_ma53g")
+[node name="Marker2D" parent="Biome" instance=ExtResource("2_aig2s")]
+
+[node name="Marker2D2" parent="Biome" instance=ExtResource("2_aig2s")]
+position = Vector2(0, 1000)
+
+[node name="Marker2D3" parent="Biome" instance=ExtResource("2_aig2s")]
+position = Vector2(0, 2000)
+
+[node name="Marker2D4" parent="Biome" instance=ExtResource("2_aig2s")]
+position = Vector2(0, 4000)
+
+[node name="Marker2D5" parent="Biome" instance=ExtResource("2_aig2s")]
+position = Vector2(0, 8000)
+
+[node name="Marker2D6" parent="Biome" instance=ExtResource("2_aig2s")]
+position = Vector2(0, 16000)
 
 [node name="player" type="Node" parent="."]
 
 [node name="CharacterBody2D" parent="player" instance=ExtResource("2_yx58l")]
+position = Vector2(696, 246)
+
+[node name="Camera2D" parent="player/CharacterBody2D" index="3"]
+zoom = Vector2(0.15, 0.15)
+
+[editable path="player/CharacterBody2D"]

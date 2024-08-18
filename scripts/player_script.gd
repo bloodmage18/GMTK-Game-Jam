@@ -1,39 +1,13 @@
 extends CharacterBody2D
 
 
-@export_category('Stats Data')
-@export var health :int = 0
-@export var speed :int = 0
-@export var size :int = 0
-@export var strength :int = 0
-@export var wieght :int = 0
-@export var rank :int = 6
-@export var constitution :int = 0
-@export var dexterity :int = 0
-@export var intelligence :int = 0
-@export var power :int = 0
+# camera variables
 
-@onready var gene_data : Dictionary = {
-	"STR": strength,
-	"CON": constitution,
-	"SIZE": size,
-	"DEX": dexterity,
-	"INT": intelligence,
-	"HP": health,
-	"POW":power,
-	"RNK": rank, 
-}
-enum stages {
-	cell,
-	pup,
-	kin,
-	mature,
-	fallen,
-	abomination,
-	calamity,
-	eldiritch
-}
-var stage = stages.cell
+
+var zoomSpeed: float = 0.0025
+var zoomMin: float = 0.001
+var zoomMax: float = 5.0
+var dragSensitivity: float = 1.0
 
 # Declare member variables here. For example, speed of the character.
 @export var move_speed: float = 200.0
@@ -46,15 +20,29 @@ var target_position: Vector2
 var is_moving: bool = false
 
 func _ready():
-	print(gene_data)
 	Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED_HIDDEN)
 	# Initialize target position as the current position of the character
-	target_position = marker.position#get_global_mouse_position()#get_local_mouse_position()#global_position
+	target_position = marker.position
 
 func _input(event: InputEvent ) -> void:
+	
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			$Camera2D.zoom += Vector2(zoomSpeed, zoomSpeed)
+			move_speed = 200.0
+		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			if $Camera2D.zoom != Vector2.ZERO:
+				$Camera2D.zoom -= Vector2(zoomSpeed, zoomSpeed)
+			move_speed += 20
+		$Camera2D.zoom = clamp($Camera2D.zoom, Vector2(zoomMin, zoomMin), Vector2(zoomMax, zoomMax))
+
 	# Check if the left mouse button was clicked
-	if Input.is_action_just_pressed("click"):
+	if event is InputEventMouseMotion:
 		# Get the position of the mouse click
+		target_position = marker.position 
+		is_moving = true
+		
+	if Input.is_action_just_pressed("attack"):
 		target_position = marker.position 
 		is_moving = true
 
