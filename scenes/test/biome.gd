@@ -1,5 +1,6 @@
 extends BiomeData
-class
+class_name Biome
+
 var final_size
 
 func make_room(_pos, _size):
@@ -10,14 +11,19 @@ func make_room(_pos, _size):
 	s.custom_solver_bias = 0.75
 	$CollisionShape2D.shape = s
 	$Attribute_Region/CollisionShape2D.shape = s
-	final_size = _size
+	$ColorRect.position = Vector2(-(size.x * 129 )/ 2 , -(size.y * 129) / 2) #* 128
+	$ColorRect.size = size * 125
+	$CollisionShape2D.shape.size = size * 128
+	final_size = _size * 125
+	
+	
 	
 
 func _ready():
 	#make_room(self.position , size)
 	await get_tree().create_timer(1).timeout
-	$ColorRect.position = Vector2(-size.x/2 , -(size.y/2))
-	$ColorRect.size = size
+	#$ColorRect.position = 
+	
 	
 	biome_setter()
 

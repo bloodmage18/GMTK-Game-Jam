@@ -1,13 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://bfcwxt763gfnt"]
+[gd_scene load_steps=5 format=3 uid="uid://bfcwxt763gfnt"]
 
 [ext_resource type="Script" path="res://scenes/test/world2.gd" id="1_q8fxp"]
-[ext_resource type="PackedScene" uid="uid://cx2sqgbttrow7" path="res://scenes/test/marker_2d.tscn" id="2_aig2s"]
-[ext_resource type="PackedScene" uid="uid://dgkoxonp2tp74" path="res://scenes/test/player.tscn" id="2_yx58l"]
 [ext_resource type="Texture2D" uid="uid://bbvc8huyuvdyx" path="res://assets/export/square.png" id="4_spyt3"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_45yfw"]
 texture = ExtResource("4_spyt3")
-texture_region_size = Vector2i(127, 127)
+texture_region_size = Vector2i(128, 128)
 0:0/next_alternative_id = 9
 0:0/0 = 0
 0:0/8 = 8
@@ -82,35 +80,7 @@ sources/0 = SubResource("TileSetAtlasSource_45yfw")
 [node name="world" type="Node2D"]
 script = ExtResource("1_q8fxp")
 
-[node name="Biome" type="Node2D" parent="."]
-visible = false
-
-[node name="Marker2D" parent="Biome" instance=ExtResource("2_aig2s")]
-
-[node name="Marker2D2" parent="Biome" instance=ExtResource("2_aig2s")]
-position = Vector2(0, 1000)
-
-[node name="Marker2D3" parent="Biome" instance=ExtResource("2_aig2s")]
-position = Vector2(0, 2000)
-
-[node name="Marker2D4" parent="Biome" instance=ExtResource("2_aig2s")]
-position = Vector2(0, 4000)
-
-[node name="Marker2D5" parent="Biome" instance=ExtResource("2_aig2s")]
-position = Vector2(0, 8000)
-
-[node name="Marker2D6" parent="Biome" instance=ExtResource("2_aig2s")]
-position = Vector2(0, 16000)
-
 [node name="player" type="Node" parent="."]
-
-[node name="CharacterBody2D" parent="player" instance=ExtResource("2_yx58l")]
-position = Vector2(350, -11292)
-freehand = true
-move_speed = 400.0
-
-[node name="Camera2D" parent="player/CharacterBody2D" index="3"]
-zoom = Vector2(0.15, 0.15)
 
 [node name="Level" type="TileMap" parent="."]
 modulate = Color(0.223529, 1, 1, 1)
@@ -119,4 +89,4 @@ format = 2
 
 [node name="Room" type="Node2D" parent="."]
 
-[editable path="player/CharacterBody2D"]
+[node name="Biome" type="Node2D" parent="."]

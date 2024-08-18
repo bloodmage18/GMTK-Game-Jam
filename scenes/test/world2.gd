@@ -12,14 +12,15 @@ extends Node2D
 # Emitted when all the rooms stabilized.
 signal rooms_placed
 
-#const Room := preload("res://scenes/test/biome.tscn")
+const Biome := preload("res://scenes/test/biome.tscn")
 const Room := preload("res://scenes/test/room.tscn")
+const Player := preload("res://scenes/test/player.tscn")
 
 # Maximum number of generated rooms.
-@export var max_rooms := 60
+@export var max_rooms := 15
 # Controls the number of paths we add to the dungeon after generating it,
 # limiting player backtracking.
-@export var reconnection_factor := 0.025
+@export var reconnection_factor := 0.0025
 
 var _rng := RandomNumberGenerator.new()
 var _data := {}
@@ -82,6 +83,10 @@ func _on_Room_sleeping_state_changed(room: MSTDungeonRoom) -> void:
 #
 	set_process(false)
 	rooms_placed.emit()
+	
+	# Print A* start points
+	var astar_start_points = get_astar_start_points()
+	print("A* start points: ", astar_start_points)
 
 
 # This is for visual feedback. We just re-render the rooms every frame.
@@ -123,6 +128,13 @@ func _generate() -> void:
 
 	# Wait for all rooms to be positioned in the game world.
 	await rooms_placed
+	
+	# Get remaining rooms info
+	var remaining_rooms_info = get_remaining_rooms_info()
+	print("Remaining rooms info: ", remaining_rooms_info)
+	# place biome nodes
+	place_biome_nodes()
+	place_player_node()
 
 	rooms.queue_free()
 	# Draws the tiles on the `level` tilemap.
@@ -130,6 +142,49 @@ func _generate() -> void:
 	for point in _data:
 		level.set_cell(0, point, 0, Vector2i.ZERO, 0)
 
+# Function to get all remaining room positions and sizes
+func get_remaining_rooms_info() -> Dictionary:
+	var room_info = {}
+	for room in rooms.get_children():
+		if _is_main_room(room):  # Ensure to only include main rooms
+			var global_position = room.global_position
+			var size = room.size
+			room_info[global_position] = size
+	return room_info
+
+# Function to get A* algorithm start points
+func get_astar_start_points() -> Array:
+	var start_points = []
+	if _path:
+		for point_id in _path.get_point_ids():
+			var global_position = _path.get_point_position(point_id)
+			start_points.append(global_position)
+	return start_points
+
+# Function to place biome nodes at each room position
+func place_biome_nodes() -> void:
+	for room in rooms.get_children():
+		if _is_main_room(room):
+			var biome_instance = Biome.instantiate()
+			# set biome size
+			biome_instance.size = room.size
+			# Set the position of the biome node to the room's position
+			biome_instance.position = room.global_position
+			# make boime attribut region
+			print("force make room")
+			biome_instance.make_room(biome_instance.position , room.size)
+			# Add the biome instance to the scene
+			$Biome.add_child(biome_instance)
+			
+# instance player when done
+func place_player_node() -> void:
+	var room_inf = get_remaining_rooms_info().size()
+	for b in $Biome.get_children():
+		if room_inf >= $Biome.get_children().size():
+			var player_instance = Player.instantiate()
+			player_instance.position = $Biome.get_child(room_inf - 1).position
+			$player.add_child(player_instance)
+	
 
 # Adds room tile positions to `_data`.
 func _add_room(room: MSTDungeonRoom) -> void:
