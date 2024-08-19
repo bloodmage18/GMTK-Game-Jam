@@ -1,19 +1,59 @@
-[gd_scene load_steps=4 format=3 uid="uid://iwngv21mcagh"]
+[gd_scene load_steps=6 format=3 uid="uid://iwngv21mcagh"]
 
 [ext_resource type="Script" path="res://scenes/test/biome.gd" id="1_80k70"]
+[ext_resource type="Shader" path="res://assets/shaders/water_torrent.gdshader" id="2_5nt7u"]
 [ext_resource type="PackedScene" uid="uid://cx2sqgbttrow7" path="res://scenes/test/marker_2d.tscn" id="2_dn88y"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_7pwub"]
-size = Vector2(500, 500)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lel2a"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dphxw"]
+shader = ExtResource("2_5nt7u")
+shader_parameter/OCTAVE = 6
+shader_parameter/mulscale = 5.0
+shader_parameter/height = 0.6
+shader_parameter/tide = 0.1
+shader_parameter/foamthickness = 0.1
+shader_parameter/timescale = 1.0
+shader_parameter/waterdeep = 0.3
+shader_parameter/WATER_COL = Vector4(0.04, 0.38, 0.88, 0.105)
+shader_parameter/WATER2_COL = Vector4(0.04, 0.35, 0.78, 1)
+shader_parameter/FOAM_COL = Vector4(0.8125, 0.9609, 0.9648, 1)
 
 [node name="Biome" type="RigidBody2D"]
-collision_layer = 64
+collision_layer = 0
 collision_mask = 0
 gravity_scale = 0.0
 can_sleep = false
 script = ExtResource("1_80k70")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_lel2a")
+debug_color = Color(0.964706, 0, 0.498039, 0.419608)
+
+[node name="Visual" type="Node2D" parent="."]
+visible = false
+
+[node name="Control" type="Control" parent="Visual"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect2" type="ColorRect" parent="Visual/Control"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -2.066
+anchor_top = -2.119
+offset_left = -288.36
+offset_top = -184.24
+offset_right = 324.0
+offset_bottom = 288.0
+color = Color(0.0392157, 0.380392, 0.878431, 1)
+
+[node name="ColorRect" type="ColorRect" parent="Visual/Control"]
+material = SubResource("ShaderMaterial_dphxw")
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -27,30 +67,46 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 0, 1, 1)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_7pwub")
-debug_color = Color(0.964706, 0, 0.498039, 0.419608)
+[node name="Attribute" type="Node2D" parent="."]
+visible = false
 
-[node name="Predetor" type="Node" parent="."]
+[node name="Attribute_Region" type="Area2D" parent="Attribute"]
+collision_mask = 15
 
-[node name="Prey" type="Node" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Attribute/Attribute_Region"]
 
-[node name="Food" type="Node2D" parent="."]
+[node name="markers" type="Node2D" parent="Attribute"]
+visible = false
 
-[node name="Exit" type="Node" parent="."]
+[node name="Marker2D" parent="Attribute/markers" instance=ExtResource("2_dn88y")]
 
-[node name="BiomeInfo" type="Node2D" parent="."]
+[node name="Marker2D2" parent="Attribute/markers" instance=ExtResource("2_dn88y")]
+position = Vector2(0, 1000)
+
+[node name="Marker2D3" parent="Attribute/markers" instance=ExtResource("2_dn88y")]
+position = Vector2(0, 2000)
+
+[node name="Marker2D4" parent="Attribute/markers" instance=ExtResource("2_dn88y")]
+position = Vector2(0, 4000)
+
+[node name="Marker2D5" parent="Attribute/markers" instance=ExtResource("2_dn88y")]
+position = Vector2(0, 8000)
+
+[node name="Marker2D6" parent="Attribute/markers" instance=ExtResource("2_dn88y")]
+position = Vector2(0, 16000)
+
+[node name="BiomeInfo" type="Node2D" parent="Attribute"]
 position = Vector2(8, 10)
 scale = Vector2(3, 3)
 
-[node name="PredatorLabel" type="Label" parent="BiomeInfo"]
+[node name="PredatorLabel" type="Label" parent="Attribute/BiomeInfo"]
 offset_right = 65.0
 offset_bottom = 23.0
 scale = Vector2(3, 3)
 text = "Predator :"
 vertical_alignment = 1
 
-[node name="PredatorSlider" type="HSlider" parent="BiomeInfo/PredatorLabel"]
+[node name="PredatorSlider" type="HSlider" parent="Attribute/BiomeInfo/PredatorLabel"]
 layout_mode = 0
 offset_left = 117.333
 offset_top = 3.66667
@@ -58,7 +114,7 @@ offset_right = 269.333
 offset_bottom = 19.6667
 editable = false
 
-[node name="Prey" type="Label" parent="BiomeInfo"]
+[node name="PreyLabel" type="Label" parent="Attribute/BiomeInfo"]
 offset_left = 3.0
 offset_top = 69.0
 offset_right = 80.0
@@ -67,7 +123,7 @@ scale = Vector2(3, 3)
 text = "Prey :"
 vertical_alignment = 1
 
-[node name="PreySlider" type="HSlider" parent="BiomeInfo/Prey"]
+[node name="PreySlider" type="HSlider" parent="Attribute/BiomeInfo/PreyLabel"]
 layout_mode = 0
 offset_left = 117.333
 offset_top = 3.66667
@@ -75,7 +131,7 @@ offset_right = 269.333
 offset_bottom = 19.6667
 editable = false
 
-[node name="FoodLabel" type="Label" parent="BiomeInfo"]
+[node name="FoodLabel" type="Label" parent="Attribute/BiomeInfo"]
 offset_left = 5.0
 offset_top = 139.0
 offset_right = 82.0
@@ -84,7 +140,7 @@ scale = Vector2(3, 3)
 text = "Food :"
 vertical_alignment = 1
 
-[node name="FoodSlider" type="HSlider" parent="BiomeInfo/FoodLabel"]
+[node name="FoodSlider" type="HSlider" parent="Attribute/BiomeInfo/FoodLabel"]
 layout_mode = 0
 offset_left = 117.333
 offset_top = 3.66667
@@ -92,32 +148,18 @@ offset_right = 269.333
 offset_bottom = 19.6667
 editable = false
 
-[node name="Food_timer" type="Timer" parent="."]
+[node name="Food_timer" type="Timer" parent="Attribute"]
 
-[node name="Attribute_Region" type="Area2D" parent="."]
-collision_mask = 15
+[node name="Exit" type="Node" parent="Attribute"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Attribute_Region"]
+[node name="Entities" type="Node2D" parent="."]
 
-[node name="Node2D" type="Node2D" parent="."]
+[node name="Predetor" type="Node2D" parent="Entities"]
 
-[node name="Marker2D" parent="Node2D" instance=ExtResource("2_dn88y")]
+[node name="Prey" type="Node2D" parent="Entities"]
 
-[node name="Marker2D2" parent="Node2D" instance=ExtResource("2_dn88y")]
-position = Vector2(0, 1000)
+[node name="Food" type="Node2D" parent="Entities"]
 
-[node name="Marker2D3" parent="Node2D" instance=ExtResource("2_dn88y")]
-position = Vector2(0, 2000)
-
-[node name="Marker2D4" parent="Node2D" instance=ExtResource("2_dn88y")]
-position = Vector2(0, 4000)
-
-[node name="Marker2D5" parent="Node2D" instance=ExtResource("2_dn88y")]
-position = Vector2(0, 8000)
-
-[node name="Marker2D6" parent="Node2D" instance=ExtResource("2_dn88y")]
-position = Vector2(0, 16000)
-
-[connection signal="timeout" from="Food_timer" to="." method="_on_food_timer_timeout"]
-[connection signal="body_entered" from="Attribute_Region" to="." method="_on_attribute_region_body_entered"]
-[connection signal="body_exited" from="Attribute_Region" to="." method="_on_attribute_region_body_exited"]
+[connection signal="body_entered" from="Attribute/Attribute_Region" to="." method="_on_attribute_region_body_entered"]
+[connection signal="body_exited" from="Attribute/Attribute_Region" to="." method="_on_attribute_region_body_exited"]
+[connection signal="timeout" from="Attribute/Food_timer" to="." method="_on_food_timer_timeout"]

@@ -1,0 +1,42 @@
+[gd_scene load_steps=3 format=3 uid="uid://cesxhao41lgfr"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_dbhq7"]
+[ext_resource type="Texture2D" uid="uid://dmi5mlq7gi5mx" path="res://assets/export/concept.png" id="1_g3e7x"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_dbhq7")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1282.0
+offset_bottom = 735.0
+
+[node name="bg" type="Control" parent="Control"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="Control/bg"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_g3e7x")
+
+[node name="buttons" type="Control" parent="Control"]
+anchors_preset = 0
+offset_left = 468.0
+offset_top = 589.0
+offset_right = 801.0
+offset_bottom = 684.0
+
+[node name="Start" type="Button" parent="Control/buttons"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Start Game"
+
+[connection signal="pressed" from="Control/buttons/Start" to="." method="_on_start_pressed"]

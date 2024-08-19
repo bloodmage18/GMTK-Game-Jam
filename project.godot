@@ -11,13 +11,15 @@ config_version=5
 [application]
 
 config/name="Gmtk-game-jam"
-run/main_scene="res://scenes/test/world.tscn"
+run/main_scene="res://main.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
 BiomeData="*res://autoload/Biome_Data.gd"
+RoomUtils="*res://autoload/RoomUtils.gd"
+GameManager="*res://autoload/Game_Manager.gd"
 
 [display]
 

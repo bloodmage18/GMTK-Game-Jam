@@ -20,6 +20,9 @@ var target_position: Vector2
 # Variable to check if the character is moving
 var is_moving: bool = false
 
+# rotation speed
+var rot_speed : float = 5
+
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED_HIDDEN)
 	# Initialize target position as the current position of the character
@@ -53,6 +56,7 @@ func _physics_process(delta: float) -> void:
 	aim_bot(delta)
 		
 	movement(delta)
+	#movement_2(delta)
 	move_and_slide()
 	
 			
@@ -94,3 +98,16 @@ func aim_bot(delta):
 	marker.top_level = true
 	marker.position = get_global_mouse_position()
 	look_at(marker.position)
+
+
+func movement_2(delta):
+	var direction = marker.position - position
+	direction = direction.normalized()
+	
+	var rot_amount = direction.rotated(self.rotation_degrees)
+	var rot = Vector2()
+	
+	rot.y = rot_amount.y * rot_speed * delta
+	rot.x = rot_amount.x * rot_speed * delta
+	
+	velocity = Vector2(rot.x , rot.y)

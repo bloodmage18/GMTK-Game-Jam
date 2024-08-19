@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://cqav2t2julq32"]
+
+[ext_resource type="PackedScene" uid="uid://dgkoxonp2tp74" path="res://scenes/test/player.tscn" id="1_vemou"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(5000, 5000)
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CharacterBody2D" parent="." instance=ExtResource("1_vemou")]
+position = Vector2(717, 438)

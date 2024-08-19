@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=3 uid="uid://bgj3icr7md2kj"]
+
+[ext_resource type="Script" path="res://scripts/prey.gd" id="1_o336c"]
+[ext_resource type="Texture2D" uid="uid://b8mgd475jxnfu" path="res://assets/export/triangle.png" id="2_wumn0"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5s1s1"]
+radius = 34.9285
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_i8gyg"]
+radius = 700.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_i1nn5"]
+radius = 52.0384
+
+[node name="Prey" type="CharacterBody2D" groups=["prey"]]
+script = ExtResource("1_o336c")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-32, 0)
+rotation = 1.5708
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_wumn0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-38, 1)
+shape = SubResource("CircleShape2D_5s1s1")
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="SightArea" type="Area2D" parent="."]
+collision_mask = 17
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SightArea"]
+position = Vector2(409, 1)
+shape = SubResource("CircleShape2D_i8gyg")
+
+[node name="EatArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EatArea"]
+position = Vector2(53, 1)
+shape = SubResource("CircleShape2D_i1nn5")
+
+[node name="WanderTimer" type="Timer" parent="."]
+
+[connection signal="body_entered" from="SightArea" to="." method="_on_sight_area_body_entered"]
+[connection signal="body_entered" from="EatArea" to="." method="_on_eat_area_body_entered"]
+[connection signal="timeout" from="WanderTimer" to="." method="_on_wander_timer_timeout"]

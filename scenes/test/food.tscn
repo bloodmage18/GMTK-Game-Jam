@@ -1,6 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://t0ynq2chxq6o"]
+[gd_scene load_steps=3 format=3 uid="uid://b6jeuk1j66ejc"]
 
-[ext_resource type="Texture2D" uid="uid://dsa0lvke81p31" path="res://assets/export/circle.png" id="1_r31ax"]
+[ext_resource type="Texture2D" uid="uid://dsa0lvke81p31" path="res://assets/export/circle.png" id="1_qw1jg"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_70kdo"]
 radius = 45.3982
@@ -15,4 +15,4 @@ shape = SubResource("CircleShape2D_70kdo")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(0.405592, 0.999121, 0.375011, 1)
 scale = Vector2(0.7, 0.7)
-texture = ExtResource("1_r31ax")
+texture = ExtResource("1_qw1jg")

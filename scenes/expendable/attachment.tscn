@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://bnpfpfb1la5lv"]
+
+[ext_resource type="Texture2D" uid="uid://b8mgd475jxnfu" path="res://assets/export/triangle.png" id="1_rd4hn"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_uht4v"]
+radius = 25.1794
+
+[node name="Head" type="Marker2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-17, 0)
+rotation = 1.5708
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_rd4hn")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+gravity_scale = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+position = Vector2(-25, 1)
+shape = SubResource("CircleShape2D_uht4v")
